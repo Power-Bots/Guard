@@ -1,6 +1,6 @@
-import { Bot } from "powerbotlibrary"
-import { db } from "powerbotlibrary"
-export { db } from "powerbotlibrary"
+import { Bot } from "@power-bots/powerbotlibrary"
+import { db } from "@power-bots/powerbotlibrary"
+export { db } from "@power-bots/powerbotlibrary"
 
 import { createBansTable } from "./lib/createBansTable"
 
