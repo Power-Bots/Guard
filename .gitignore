@@ -1,0 +1,16 @@
+# Modules
+node_modules
+
+# OS Stuff
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Build files
+dist
+
+# Env File
+.env
+
+# Database
+*.db*
