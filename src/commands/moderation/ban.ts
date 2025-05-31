@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, PermissionFlagsBits } from 'discord.js';
+import { SlashCommandBuilder, PermissionFlagsBits, MessageFlags } from 'discord.js';
 import { createBansTable } from '../../lib/createBansTable';
 import { parseTime } from '../../lib/parseTime';
 import { db } from '../../main';
@@ -28,11 +28,11 @@ module.exports = {
 	async execute(interaction: any) {
         createBansTable()
         if (!interaction.appPermissions.has(PermissionFlagsBits.BanMembers)) return await interaction.reply(
-            {content: `❌ I don't have the \`Ban Members\` permission!`, ephemeral: true});
+            {content: `❌ I don't have the \`Ban Members\` permission!`, flags: [MessageFlags.Ephemeral]});
         if (!interaction.member.permissions.has(PermissionFlagsBits.BanMembers)) return await interaction.reply(
-            {content: `❌ You don't have the \`Ban Members\` permission`, ephemeral: true});
+            {content: `❌ You don't have the \`Ban Members\` permission`, flags: [MessageFlags.Ephemeral]});
         const target = interaction.options.getMentionable("member")
-        if (!target.moderatable) return await interaction.reply({content: `❌ This member may not be banned`, ephemeral: true});
+        if (!target.moderatable) return await interaction.reply({content: `❌ This member may not be banned`, flags: [MessageFlags.Ephemeral]});
         const unparsedDuration = interaction.options.getString("duration")
         let duration: number;
         if (unparsedDuration){
@@ -41,7 +41,7 @@ module.exports = {
                 duration = parseTime(unparsedDuration)
                 unbanTime = Date.now() + duration
             } catch {
-                return await interaction.reply({content: `❌ Invalid Duration`});
+                return await interaction.reply({content: `❌ Invalid Duration`, flags: [MessageFlags.Ephemeral]});
             }
             const insert = db.prepare("INSERT INTO bans (userID, serverID, unbanTime) VALUES (?, ?, ?)")
             insert.run(target.id, interaction.guildId, unbanTime)
