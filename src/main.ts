@@ -13,7 +13,9 @@ async function unbanCheck() {
         const serverID = row.serverID.toString()
         const userID = row.userID.toString()
         let server = await bot.client.guilds.fetch(serverID)
-        server.bans.remove(userID)
+        try {
+            server.bans.remove(userID)
+        } catch {}
         deleteBan(serverID, userID)
     })
 }
