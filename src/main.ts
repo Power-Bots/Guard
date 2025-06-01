@@ -3,6 +3,7 @@ import { db } from "@power-bots/powerbotlibrary"
 export { db } from "@power-bots/powerbotlibrary"
 
 import { createBansTable } from "./lib/createBansTable"
+import { deleteBan } from "./lib/deleteBan"
 
 // Check to see if a member should be unbanned every 10 seconds
 async function unbanCheck() {
@@ -13,8 +14,7 @@ async function unbanCheck() {
         const userID = row.userID.toString()
         let server = await bot.client.guilds.fetch(serverID)
         server.bans.remove(userID)
-        const delstmt = db.prepare(`DELETE FROM bans WHERE serverID = ${serverID} AND userID = ${userID}`)
-        delstmt.run()
+        deleteBan(serverID, userID)
     })
 }
 setInterval(unbanCheck, 10 * 1000)
