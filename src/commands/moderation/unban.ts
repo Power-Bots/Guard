@@ -1,6 +1,5 @@
 import { SlashCommandBuilder, PermissionFlagsBits, MessageFlags, GuildBan } from 'discord.js';
 import { createBansTable } from '../../lib/createBansTable';
-import { db } from '../../main';
 import { deleteBan } from '../../lib/deleteBan';
 
 module.exports = {
