@@ -2,13 +2,11 @@ import { Bot } from "@power-bots/powerbotlibrary"
 import { db } from "@power-bots/powerbotlibrary"
 export { db } from "@power-bots/powerbotlibrary"
 
-import { createBansTable } from "./lib/createBansTable"
 import { deleteBan } from "./lib/deleteBan"
 
 // Check to see if a member should be unbanned every 10 seconds
 async function unbanCheck() {
-    createBansTable()
-    const stmt = db.prepare(`SELECT * FROM bans WHERE unbanTime <= ${Date.now()}`)
+    const stmt = db.prepare(`SELECT * FROM timers WHERE finishTime <= ${Date.now()} AND type = 'ban'`)
     stmt.all().forEach(async (row: any) => {
         const serverID = row.serverID.toString()
         const userID = row.userID.toString()

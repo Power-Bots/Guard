@@ -1,5 +1,4 @@
 import { SlashCommandBuilder, PermissionFlagsBits, MessageFlags } from 'discord.js';
-import { createBansTable } from '../../lib/createBansTable';
 import { parseTime } from '../../lib/parseTime';
 import { db } from '../../main';
 
@@ -26,7 +25,6 @@ module.exports = {
             .setRequired(false)
         ),
 	async execute(interaction: any) {
-        createBansTable()
         if (!interaction.appPermissions.has(PermissionFlagsBits.BanMembers)) return await interaction.reply(
             {content: `❌ I don't have the \`Ban Members\` permission!`, flags: [MessageFlags.Ephemeral]});
         if (!interaction.member.permissions.has(PermissionFlagsBits.BanMembers)) return await interaction.reply(
@@ -43,8 +41,8 @@ module.exports = {
             } catch {
                 return await interaction.reply({content: `❌ Invalid Duration`, flags: [MessageFlags.Ephemeral]});
             }
-            const insert = db.prepare("INSERT INTO bans (userID, serverID, unbanTime) VALUES (?, ?, ?)")
-            insert.run(target.id, interaction.guildId, unbanTime)
+            const insert = db.prepare("INSERT INTO timers (userID, serverID, finishTime, type) VALUES (?, ?, ?, ?)")
+            insert.run(target.id, interaction.guildId, unbanTime, "ban")
         }
         target.ban({reason: interaction.options.getString("reason")})
         if (unparsedDuration) {

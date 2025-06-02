@@ -1,5 +1,4 @@
 import { SlashCommandBuilder, PermissionFlagsBits, MessageFlags, GuildBan } from 'discord.js';
-import { createBansTable } from '../../lib/createBansTable';
 import { deleteBan } from '../../lib/deleteBan';
 
 module.exports = {
@@ -19,7 +18,6 @@ module.exports = {
             .setRequired(false)
         ),
 	async execute(interaction: any) {
-        createBansTable()
         if (!interaction.appPermissions.has(PermissionFlagsBits.BanMembers)) return await interaction.reply(
             {content: `❌ I don't have the \`Ban Members\` permission!`, flags: [MessageFlags.Ephemeral]});
         if (!interaction.member.permissions.has(PermissionFlagsBits.BanMembers)) return await interaction.reply(
