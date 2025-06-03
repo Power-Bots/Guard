@@ -63,8 +63,6 @@ module.exports = {
         try {
             let server = await bot.client.guilds.fetch(serverID)
             await server.bans.remove(userID)
-        } catch (e) {
-            bot.log.error(e)
-        }
+        } catch {}
     },
 };

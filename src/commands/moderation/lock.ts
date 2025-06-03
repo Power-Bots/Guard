@@ -63,20 +63,21 @@ module.exports = {
         }
 	},
     async finishedTimer(timer: Timer) {
-        let channel: GuildChannel
-        let everyone: Role
+        let channel: GuildChannel | null = null
+        let everyone: Role | null = null
         try {
             channel = await bot.client.channels.fetch(timer.channelID)
+            if (!channel) return
             everyone = channel.guild.roles.everyone
-            channel.permissionOverwrites.edit(everyone, {
-                SendMessages: true,
-                SendMessagesInThreads: true,
-                CreatePublicThreads: true,
-                CreatePrivateThreads: true,
-                AddReactions: true
-            })
-        } catch (e){
-            bot.log.error(e)
-        }
+        } catch {}
+        if (!(channel && everyone)) return
+        if (!channel.permissionsFor(channel.client.user.id)?.has(PermissionFlagsBits.ManageChannels)) return
+        channel.permissionOverwrites.edit(everyone, {
+            SendMessages: true,
+            SendMessagesInThreads: true,
+            CreatePublicThreads: true,
+            CreatePrivateThreads: true,
+            AddReactions: true
+        })
     },
 };
