@@ -38,15 +38,9 @@ module.exports = {
             AddReactions: false
         })
         const unparsedDuration = interaction.options.getString("duration")
-        let duration: number;
         if (unparsedDuration){
-            let finishTime;
-            try {
-                duration = parseTime(unparsedDuration)
-                finishTime = Date.now() + duration
-            } catch {
-                return await interaction.reply({content: `❌ Invalid Duration`, flags: [MessageFlags.Ephemeral]});
-            }
+            let finishTime = await parseTime(unparsedDuration)
+            if (!finishTime) return await interaction.reply({content: `❌ Invalid Duration`, flags: [MessageFlags.Ephemeral]});
             await Timer.new({
                 channelID: channel.id,
                 serverID: interaction.guildId,

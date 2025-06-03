@@ -33,15 +33,9 @@ module.exports = {
         const target = interaction.options.getMentionable("member")
         if (!target.moderatable) return await interaction.reply({content: `❌ This member may not be banned`, flags: [MessageFlags.Ephemeral]});
         const unparsedDuration = interaction.options.getString("duration")
-        let duration: number;
         if (unparsedDuration){
-            let unbanTime;
-            try {
-                duration = parseTime(unparsedDuration)
-                unbanTime = Date.now() + duration
-            } catch {
-                return await interaction.reply({content: `❌ Invalid Duration`, flags: [MessageFlags.Ephemeral]});
-            }
+            let unbanTime = await parseTime(unparsedDuration)
+            if (!unbanTime) return await interaction.reply({content: `❌ Invalid Duration`, flags: [MessageFlags.Ephemeral]});
             await Timer.new({
                 userID: target.id,
                 serverID: interaction.guildId,
