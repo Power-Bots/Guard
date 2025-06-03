@@ -22,7 +22,7 @@ export class Timer {
         this.type = options.type
     }
     static async new(options: TimerOptions){
-        knex("timers").insert({
+        await knex("timers").insert({
             serverID: options.serverID,
             userID: options.userID,
             channelID: options.channelID,
