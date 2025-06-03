@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, PermissionFlagsBits, MessageFlags, GuildBan } from 'discord.js';
-import { deleteBan } from '../../lib/deleteBan';
+import { Timer } from '../../lib/timers';
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -31,7 +31,11 @@ module.exports = {
         }
         if (!ban) return await interaction.reply(
             {content: `❌ This member is not banned`, flags: [MessageFlags.Ephemeral]});
-        deleteBan(interaction.guildId, target.id)
+        Timer.get({
+            userID: target.id,
+            serverID: interaction.guildId,
+            type: "ban"
+        })
         await interaction.guild.bans.remove(target.id, interaction.options.getString("reason"))
         await interaction.reply({content: `✅ Unbanned \`${target.username}\``});
 	},

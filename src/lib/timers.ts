@@ -1,19 +1,19 @@
-import { db, knex } from "../main"
+import { knex } from "../main"
 
 interface TimerOptions {
-    serverID: number | string,
-    userID: number | string | null,
-    channelID: number | string | null,
-    finishTime: number | string | null,
-    type: string
+    serverID?: number | string,
+    userID?: number | string,
+    channelID?: number | string,
+    finishTime?: number | string,
+    type?: string
 }
 
 export class Timer {
-    serverID: number | string
-    userID: number | string | null
-    channelID: number | string | null
-    finishTime: number | string | null
-    type: string
+    serverID?: number | string
+    userID?: number | string
+    channelID?: number | string
+    finishTime?: number | string
+    type?: string
     constructor(options: TimerOptions){
         this.serverID = options.serverID
         this.userID = options.userID
@@ -21,10 +21,6 @@ export class Timer {
         this.finishTime = options.finishTime
         this.type = options.type
     }
-    /*
-
-    UNTESTED
-
     static async new(options: TimerOptions){
         knex("timers").insert({
             serverID: options.serverID,
@@ -44,7 +40,6 @@ export class Timer {
         if (timers.length === 0) return null
         return timers
     }
-    */
     static async getFinishedTimers(): Promise<Timer[] | null> {
         const timersRaw = await knex("timers")
             .where("finishTime", "<=", Date.now())

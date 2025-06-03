@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, PermissionFlagsBits, MessageFlags } from 'discord.js';
 import { parseTime } from '../../lib/parseTime';
-import { db } from '../../main';
+import { Timer } from '../../lib/timers';
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -41,8 +41,12 @@ module.exports = {
             } catch {
                 return await interaction.reply({content: `❌ Invalid Duration`, flags: [MessageFlags.Ephemeral]});
             }
-            const insert = db.prepare("INSERT INTO timers (userID, serverID, finishTime, type) VALUES (?, ?, ?, ?)")
-            insert.run(target.id, interaction.guildId, unbanTime, "ban")
+            Timer.new({
+                userID: target.id,
+                serverID: interaction.guildId,
+                finishTime: unbanTime,
+                type: "ban"
+            })
         }
         target.ban({reason: interaction.options.getString("reason")})
         if (unparsedDuration) {

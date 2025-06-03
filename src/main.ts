@@ -12,12 +12,14 @@ export const knex = require("knex")({
 
 import { Timer } from "./lib/timers"
 
-// Check to see if a member should be unbanned every 10 seconds
-async function unbanCheck() {
+export const bot = new Bot(__dirname)
+
+// Check for finished timers every 10 seconds
+async function timerCheck() {
     const timers = await Timer.getFinishedTimers()
     if (!timers) return
     timers.forEach(async (timer: Timer) => {
-        if (timer.type === "ban" && timer.userID) {
+        if (timer.type === "ban" && timer.userID && timer.serverID) {
             const serverID = timer.serverID.toString()
             const userID = timer.userID.toString()
             try {
@@ -30,6 +32,4 @@ async function unbanCheck() {
         }
     })
 }
-setInterval(unbanCheck, 10 * 1000)
-
-export const bot = new Bot(__dirname)
+setInterval(timerCheck, 10 * 1000)
