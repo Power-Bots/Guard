@@ -14,22 +14,16 @@ import { Timer } from "./lib/timers"
 
 export const bot = new Bot(__dirname)
 
-// Check for finished timers every 10 seconds
+// Check for finished timers every 1 second
 async function timerCheck() {
     const timers = await Timer.getFinishedTimers()
     if (!timers) return
     timers.forEach(async (timer: Timer) => {
-        if (timer.type === "ban" && timer.userID && timer.serverID) {
-            const serverID = timer.serverID.toString()
-            const userID = timer.userID.toString()
-            try {
-                let server = await bot.client.guilds.fetch(serverID)
-                server.bans.remove(userID)
-            } catch (e) {
-                bot.log.error(e)
-            }
-            timer.del()
-        }
+        if (!timer.type) return
+        const command = bot.commands.get(timer.type)
+        if (!(command && command.finishedTimer)) return await timer.del()
+        await command.finishedTimer(timer)
+        timer.del()
     })
 }
-setInterval(timerCheck, 10 * 1000)
+setInterval(timerCheck, 1 * 1000)

@@ -1,6 +1,7 @@
 import { SlashCommandBuilder, PermissionFlagsBits, MessageFlags } from 'discord.js';
 import { parseTime } from '../../lib/parseTime';
 import { Timer } from '../../lib/timers';
+import { bot } from '../../main';
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -41,7 +42,7 @@ module.exports = {
             } catch {
                 return await interaction.reply({content: `❌ Invalid Duration`, flags: [MessageFlags.Ephemeral]});
             }
-            Timer.new({
+            await Timer.new({
                 userID: target.id,
                 serverID: interaction.guildId,
                 finishTime: unbanTime,
@@ -55,4 +56,15 @@ module.exports = {
             await interaction.reply({content: `✅ Banned \`${target.user.username}\``});
         }
 	},
+    async finishedTimer(timer: Timer){
+        if (!(timer.serverID && timer.userID)) return
+        const serverID = timer.serverID.toString()
+        const userID = timer.userID.toString()
+        try {
+            let server = await bot.client.guilds.fetch(serverID)
+            await server.bans.remove(userID)
+        } catch (e) {
+            bot.log.error(e)
+        }
+    },
 };
