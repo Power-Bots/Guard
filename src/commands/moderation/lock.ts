@@ -30,13 +30,6 @@ module.exports = {
             {content: `❌ You don't have the \`Manage Channels\` permission`, flags: [MessageFlags.Ephemeral]});
         const channel: GuildChannel = interaction.options.getChannel("channel") || interaction.channel
         const everyone: Role = interaction.guild.roles.everyone
-        channel.permissionOverwrites.edit(everyone, {
-            SendMessages: false,
-            SendMessagesInThreads: false,
-            CreatePublicThreads: false,
-            CreatePrivateThreads: false,
-            AddReactions: false
-        })
         const unparsedDuration = interaction.options.getString("duration")
         if (unparsedDuration){
             let finishTime = await parseTime(unparsedDuration)
@@ -48,6 +41,13 @@ module.exports = {
                 type: "lock"
             })
         }
+        channel.permissionOverwrites.edit(everyone, {
+            SendMessages: false,
+            SendMessagesInThreads: false,
+            CreatePublicThreads: false,
+            CreatePrivateThreads: false,
+            AddReactions: false
+        })
         const message = interaction.options.getString("message")
         if (channel.isSendable() && message) await channel.send({content: message})
         if (unparsedDuration) {
