@@ -1,5 +1,4 @@
 import { SlashCommandBuilder, PermissionFlagsBits, MessageFlags } from 'discord.js';
-import { parseTime } from '../../lib/parseTime';
 
 module.exports = {
 	data: new SlashCommandBuilder()
