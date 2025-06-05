@@ -22,6 +22,12 @@ module.exports = {
             .setName("duration")
             .setDescription("Duration of ban. Example: 1y 5M 9w 1d 8h 7m 3s")
             .setRequired(false)
+        )
+        .addBooleanOption(option => 
+            option
+            .setName("reactions")
+            .setDescription("Set true to keep reactions on")
+            .setRequired(false)
         ),
 	async execute(interaction: any) {
         if (!interaction.appPermissions.has(PermissionFlagsBits.ManageChannels)) return await interaction.reply(
@@ -41,13 +47,15 @@ module.exports = {
                 type: "lock"
             })
         }
-        channel.permissionOverwrites.edit(everyone, {
+        await channel.permissionOverwrites.edit(everyone, {
             SendMessages: false,
             SendMessagesInThreads: false,
             CreatePublicThreads: false,
             CreatePrivateThreads: false,
             AddReactions: false
         })
+        const reactions = interaction.options.getBoolean("reactions")
+        if (reactions) await channel.permissionOverwrites.edit(everyone, {AddReactions: null})
         const message = interaction.options.getString("message")
         if (channel.isSendable() && message) await channel.send({content: message})
         if (unparsedDuration) {
