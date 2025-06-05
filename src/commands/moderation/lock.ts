@@ -67,11 +67,11 @@ module.exports = {
         if (!(channel && everyone)) return
         if (!channel.permissionsFor(channel.client.user.id)?.has(PermissionFlagsBits.ManageChannels)) return
         channel.permissionOverwrites.edit(everyone, {
-            SendMessages: true,
-            SendMessagesInThreads: true,
-            CreatePublicThreads: true,
-            CreatePrivateThreads: true,
-            AddReactions: true
+            SendMessages: null,
+            SendMessagesInThreads: null,
+            CreatePublicThreads: null,
+            CreatePrivateThreads: null,
+            AddReactions: null
         })
     },
 };

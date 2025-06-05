@@ -17,11 +17,11 @@ module.exports = {
         const channel: GuildChannel = interaction.options.getChannel("channel") || interaction.channel
         const everyone: Role = interaction.guild.roles.everyone
         channel.permissionOverwrites.edit(everyone, {
-            SendMessages: true,
-            SendMessagesInThreads: true,
-            CreatePublicThreads: true,
-            CreatePrivateThreads: true,
-            AddReactions: true
+            SendMessages: null,
+            SendMessagesInThreads: null,
+            CreatePublicThreads: null,
+            CreatePrivateThreads: null,
+            AddReactions: null
         })
         await interaction.reply({content: `✅ Unlocked <#${channel.id}>`});
 	},
