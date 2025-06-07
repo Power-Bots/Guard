@@ -1,10 +1,15 @@
-import { bot } from "@power-bots/powerbotlibrary"
+import { bot, Config } from "@power-bots/powerbotlibrary"
 import { Timer } from "./lib/timers"
+import { refreshMuteRole } from "./lib/refreshMuteRole"
 
 export { bot, knex } from "@power-bots/powerbotlibrary"
 
 bot.setup(__dirname)
 bot.run()
+
+Config.onSet("guild.mute.role", async (config: any) => {
+    await refreshMuteRole(config.id, config.value)
+})
 
 // Check for finished timers every 1 second
 async function timerCheck() {
