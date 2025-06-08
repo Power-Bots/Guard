@@ -1,7 +1,7 @@
-import { Guild, NonThreadGuildBasedChannel, Role, Snowflake, PermissionFlagsBits } from 'discord.js';
+import { Guild, GuildChannel, Role, Snowflake } from 'discord.js';
 import { bot } from "../main"
 
-export async function refreshMuteRole(guildId: Snowflake, roleId: Snowflake){
+export async function refreshMuteRole(guildId: Snowflake, roleId: Snowflake, channel?: GuildChannel){
     let guild: Guild | null = null
     let role: Role | null = null
     try {
@@ -12,10 +12,11 @@ export async function refreshMuteRole(guildId: Snowflake, roleId: Snowflake){
         role = await guild.roles.fetch(roleId)
     } catch {}
     if (!role) return
-    let channels = await guild.channels.fetch()
+    let channels: any = await guild.channels.fetch()
+    if (channel) channels = await guild.channels.fetch(channel.id)
     let fails = 0
     let successful = 0
-    channels.forEach(async (channel: NonThreadGuildBasedChannel | null, id: Snowflake) => {
+    channels.forEach(async (channel: any, id: Snowflake) => {
         try {
             channel?.permissionOverwrites.edit(role, {
                 SendMessages: false,

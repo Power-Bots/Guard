@@ -1,6 +1,7 @@
-import { bot, Config } from "@power-bots/powerbotlibrary"
+import { bot, Config, ConfigTypes } from "@power-bots/powerbotlibrary"
 import { Timer } from "./lib/timers"
 import { refreshMuteRole } from "./lib/refreshMuteRole"
+import { Events, GuildChannel } from "discord.js"
 
 export { bot, knex } from "@power-bots/powerbotlibrary"
 
@@ -9,6 +10,12 @@ bot.run()
 
 Config.onSet("guild.mute.role", async (config: any) => {
     await refreshMuteRole(config.id, config.value)
+})
+
+bot.client.on(Events.ChannelCreate, async (channel: GuildChannel) => {
+    const muteRoleID = await Config.get(ConfigTypes.Guild, channel.guildId, "guild.mute.role")
+    if (!muteRoleID) return
+    await refreshMuteRole(channel.guildId, muteRoleID)
 })
 
 // Check for finished timers every 1 second
