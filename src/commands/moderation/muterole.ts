@@ -2,13 +2,8 @@ import {
 	SlashCommandBuilder,
 	PermissionFlagsBits,
 	MessageFlags,
-	Guild,
-	Role,
 } from "discord.js"
-import { Timer } from "../../lib/timers"
-import { bot } from "../../main"
 import { Config, ConfigTypes } from "@power-bots/powerbotlibrary"
-import { parseTime } from "../../lib/parseTime"
 import { refreshMuteRole } from "../../lib/refreshMuteRole"
 
 module.exports = {

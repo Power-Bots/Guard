@@ -4,7 +4,6 @@ import {
 	MessageFlags,
 	GuildChannel,
 	Role,
-	Guild,
 } from "discord.js"
 import { parseTime } from "../../lib/parseTime"
 import { Timer } from "../../lib/timers"
