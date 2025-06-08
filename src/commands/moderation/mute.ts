@@ -2,8 +2,6 @@ import {
 	SlashCommandBuilder,
 	PermissionFlagsBits,
 	MessageFlags,
-	Guild,
-	Role,
 } from "discord.js"
 import { Timer } from "../../lib/timers"
 import { bot } from "../../main"
@@ -44,8 +42,6 @@ module.exports = {
 				flags: [MessageFlags.Ephemeral],
 			})
 		const target = interaction.options.getMentionable("member")
-		let guild: Guild | null = null
-		let role: Role | null = null
 		let muteRoleID: string = await Config.get(
 			ConfigTypes.Guild,
 			interaction.guildId,
@@ -55,13 +51,9 @@ module.exports = {
 			return await interaction.reply({
 				content: `❌ No mute role set. To set a mute role use \`/config set guild.mute.role <mute role id>\``,
 			})
-		try {
-			guild = await bot.client.guilds.fetch(interaction.guildId)
-		} catch {}
+		let guild = await bot.getGuild(interaction.guildId)
 		if (!guild) return
-		try {
-			role = await guild.roles.fetch(muteRoleID)
-		} catch {}
+		let role = await bot.getRole(muteRoleID, guild)
 		if (!role)
 			return await interaction.reply({
 				content: `❌ No mute role set. To set a mute role use \`/config set guild.mute.role <mute role id>\``,
@@ -90,14 +82,16 @@ module.exports = {
 	async finishedTimer(timer: Timer) {
 		if (!(timer.serverID && timer.userID)) return
 		try {
-			let guild = await bot.client.guilds.fetch(timer.serverID)
-			let member = await guild.members.fetch(timer.userID)
+			let guild = await bot.getGuild(timer.serverID.toString())
+			if (!guild) return
+			let member = await guild.members.fetch(timer.userID.toString())
 			let muteRoleID: string = await Config.get(
 				ConfigTypes.Guild,
 				guild.id,
 				"mute.role",
 			)
-			let role = await guild.roles.fetch(muteRoleID)
+			let role = await bot.getRole(muteRoleID, guild)
+			if (!role) return
 			member.roles.remove(role)
 		} catch {}
 	},
