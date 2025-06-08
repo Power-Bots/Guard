@@ -9,25 +9,29 @@ bot.setup(__dirname)
 bot.run()
 
 Config.onSet("guild.mute.role", async (config: any) => {
-    await refreshMuteRole(config.id, config.value)
+	await refreshMuteRole(config.id, config.value)
 })
 
 bot.client.on(Events.ChannelCreate, async (channel: GuildChannel) => {
-    const muteRoleID = await Config.get(ConfigTypes.Guild, channel.guildId, "guild.mute.role")
-    if (!muteRoleID) return
-    await refreshMuteRole(channel.guildId, muteRoleID)
+	const muteRoleID = await Config.get(
+		ConfigTypes.Guild,
+		channel.guildId,
+		"guild.mute.role",
+	)
+	if (!muteRoleID) return
+	await refreshMuteRole(channel.guildId, muteRoleID)
 })
 
 // Check for finished timers every 1 second
 async function timerCheck() {
-    const timers = await Timer.getFinishedTimers()
-    if (!timers) return
-    timers.forEach(async (timer: Timer) => {
-        if (!timer.type) return
-        const command = bot.commands.get(timer.type)
-        if (!(command && command.finishedTimer)) return await timer.del()
-        await command.finishedTimer(timer)
-        timer.del()
-    })
+	const timers = await Timer.getFinishedTimers()
+	if (!timers) return
+	timers.forEach(async (timer: Timer) => {
+		if (!timer.type) return
+		const command = bot.commands.get(timer.type)
+		if (!(command && command.finishedTimer)) return await timer.del()
+		await command.finishedTimer(timer)
+		timer.del()
+	})
 }
 setInterval(timerCheck, 1 * 1000)

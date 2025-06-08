@@ -15,5 +15,8 @@
     "prebuild": "node cleanDist.js",
     "build": "tsc",
     "postbuild": "copyfiles -u 1 src/migrate/* dist && copyfiles -u 1 src/*.json dist"
+  },
+  "devDependencies": {
+    "prettier": "3.5.3"
   }
 }

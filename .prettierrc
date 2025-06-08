@@ -1,0 +1,8 @@
+{
+	"printWidth": 80,
+	"useTabs": true,
+	"semi": false,
+	"trailingComma": "all",
+	"bracketSpacing": true,
+	"objectWrap": "collapse"
+}

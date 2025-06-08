@@ -1,7 +1,1 @@
-{
-    "configs": {
-        "guild": [
-            "mute.role"
-        ]
-    }
-}
+{ "configs": { "guild": ["mute.role"] } }
