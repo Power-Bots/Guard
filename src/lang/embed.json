@@ -1,0 +1,24 @@
+{
+	"mute.success": { "title": "$mute.success.title", "color": "$color.green" },
+	"error.invalid_duration": {
+		"title": "$error.invalid_duration.title",
+		"color": "$color.red",
+		"options": { "ephemeral": true }
+	},
+	"mute.role_invalid": {
+		"title": "$mute.role_invalid.title",
+		"description": "$mute.role_invalid.description",
+		"color": "$color.red",
+		"options": { "ephemeral": true }
+	},
+	"error.bot_missing_permission": {
+		"title": "$error.bot_missing_permission.title",
+		"color": "$color.red",
+		"options": { "ephemeral": true }
+	},
+	"error.user_missing_permission": {
+		"title": "$error.user_missing_permission.title",
+		"color": "$color.red",
+		"options": { "ephemeral": true }
+	}
+}
