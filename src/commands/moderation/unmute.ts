@@ -1,12 +1,11 @@
 import {
 	SlashCommandBuilder,
-	PermissionFlagsBits,
-	MessageFlags,
 	Guild,
 	Role,
 } from "discord.js"
 import { bot } from "../../main"
 import { Config, ConfigTypes } from "@power-bots/powerbotlibrary"
+import { hasPermissions } from "../../lib/checkPermissions"
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -25,16 +24,7 @@ module.exports = {
 				.setRequired(false),
 		),
 	async execute(interaction: any) {
-		if (!interaction.appPermissions.has(PermissionFlagsBits.ManageRoles))
-			return await interaction.reply({
-				content: `❌ I don't have the \`Manage Roles\` permission!`,
-				flags: [MessageFlags.Ephemeral],
-			})
-		if (!interaction.member.permissions.has(PermissionFlagsBits.ManageRoles))
-			return await interaction.reply({
-				content: `❌ You don't have the \`Manage Roles\` permission`,
-				flags: [MessageFlags.Ephemeral],
-			})
+		if (!await hasPermissions(interaction, "ManageRoles")) return
 		const target = interaction.options.getMentionable("member")
 		let guild: Guild | null = null
 		let role: Role | null = null

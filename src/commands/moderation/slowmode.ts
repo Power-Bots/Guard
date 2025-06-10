@@ -1,10 +1,8 @@
 import {
 	SlashCommandBuilder,
-	PermissionFlagsBits,
-	MessageFlags,
 	GuildChannel,
 } from "discord.js"
-import { bot } from "../../main"
+import { hasPermissions } from "../../lib/checkPermissions"
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -31,16 +29,7 @@ module.exports = {
 				.setRequired(false),
 		),
 	async execute(interaction: any) {
-		if (!interaction.appPermissions.has(PermissionFlagsBits.ManageChannels))
-			return await interaction.reply({
-				content: `❌ I don't have the \`Manage Channels\` permission!`,
-				flags: [MessageFlags.Ephemeral],
-			})
-		if (!interaction.member.permissions.has(PermissionFlagsBits.ManageChannels))
-			return await interaction.reply({
-				content: `❌ You don't have the \`Manage Channels\` permission`,
-				flags: [MessageFlags.Ephemeral],
-			})
+		if (!await hasPermissions(interaction, "ManageChannels")) return
 		const channel: GuildChannel =
 			interaction.options.getChannel("channel") || interaction.channel
 		if (!channel.isTextBased())

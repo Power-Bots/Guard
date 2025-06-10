@@ -1,9 +1,9 @@
 import {
 	SlashCommandBuilder,
-	PermissionFlagsBits,
 	MessageFlags,
 } from "discord.js"
 import { parseTime } from "../../lib/parseTime"
+import { hasPermissions } from "../../lib/checkPermissions"
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -30,16 +30,7 @@ module.exports = {
 				.setRequired(false),
 		),
 	async execute(interaction: any) {
-		if (!interaction.appPermissions.has(PermissionFlagsBits.MuteMembers))
-			return await interaction.reply({
-				content: `❌ I don't have the \`Timeout Members\` permission!`,
-				flags: [MessageFlags.Ephemeral],
-			})
-		if (!interaction.member.permissions.has(PermissionFlagsBits.MuteMembers))
-			return await interaction.reply({
-				content: `❌ You don't have the \`Timeout Members\` permission`,
-				flags: [MessageFlags.Ephemeral],
-			})
+		if (!await hasPermissions(interaction, "MuteMembers")) return
 		const target = interaction.options.getMentionable("member")
 		if (!target.moderatable)
 			return await interaction.reply({

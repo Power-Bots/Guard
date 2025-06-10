@@ -1,10 +1,9 @@
 import {
 	SlashCommandBuilder,
-	PermissionFlagsBits,
-	MessageFlags,
 } from "discord.js"
 import { Config, ConfigTypes } from "@power-bots/powerbotlibrary"
 import { refreshMuteRole } from "../../lib/refreshMuteRole"
+import { hasPermissions } from "../../lib/checkPermissions"
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -19,18 +18,7 @@ module.exports = {
 		const subCommand = interaction.options.getSubcommand()
 		switch (subCommand) {
 			case "refresh":
-				if (!interaction.appPermissions.has(PermissionFlagsBits.ManageRoles))
-					return await interaction.reply({
-						content: `❌ I don't have the \`Manage Roles\` permission!`,
-						flags: [MessageFlags.Ephemeral],
-					})
-				if (
-					!interaction.member.permissions.has(PermissionFlagsBits.ManageRoles)
-				)
-					return await interaction.reply({
-						content: `❌ You don't have the \`Manage Roles\` permission`,
-						flags: [MessageFlags.Ephemeral],
-					})
+				if (!await hasPermissions(interaction, "ManageRoles")) return
 				let muteRoleID: string = await Config.get(
 					ConfigTypes.Guild,
 					interaction.guildId,

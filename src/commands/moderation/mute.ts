@@ -1,7 +1,5 @@
 import {
 	SlashCommandBuilder,
-	PermissionFlagsBits,
-	MessageFlags,
 } from "discord.js"
 import { Timer } from "../../lib/timers"
 import { bot } from "../../main"
