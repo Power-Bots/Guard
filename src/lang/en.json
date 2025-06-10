@@ -6,6 +6,10 @@
 	"error.bot_missing_permission.title": "❌ I don't have the `{{permission}}` permission!",
 	"error.user_missing_permission.title": "❌ You don't have the `{{permission}}` permission!",
 	"permission.ManageRoles": "Manage Roles",
+	"permission.ManageChannels": "Manage Channels",
+	"permission.BanMembers": "Ban Members",
+	"permission.KickMembers": "Kick Members",
+	"permission.MuteMembers": "Timeout Members",
 	"color.green": 4052839,
 	"color.red": 15548997
 }
