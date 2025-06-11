@@ -4,7 +4,6 @@ import {
 	MessageFlags,
 	GuildChannel,
 } from "discord.js"
-import { bot } from "../../main"
 
 module.exports = {
 	data: new SlashCommandBuilder()

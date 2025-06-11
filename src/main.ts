@@ -1,7 +1,6 @@
 import { bot, Config, ConfigTypes } from "@power-bots/powerbotlibrary"
 import { Timer } from "./lib/timers"
 import { refreshMuteRole } from "./lib/refreshMuteRole"
-import { Events, GuildChannel } from "discord.js"
 
 export { bot, knex } from "@power-bots/powerbotlibrary"
 
