@@ -1,6 +1,4 @@
-import {
-	SlashCommandBuilder,
-} from "discord.js"
+import { SlashCommandBuilder } from "discord.js"
 import { Timer } from "../../lib/timers"
 import { bot } from "../../main"
 import { Config, ConfigTypes } from "@power-bots/powerbotlibrary"
@@ -31,7 +29,7 @@ module.exports = {
 				.setRequired(false),
 		),
 	async execute(interaction: any) {
-		if (!await hasPermissions(interaction, "ManageRoles")) return
+		if (!(await hasPermissions(interaction, "ManageRoles"))) return
 		const target = interaction.options.getMentionable("member")
 		let muteRoleID: string = await Config.get(
 			ConfigTypes.Guild,

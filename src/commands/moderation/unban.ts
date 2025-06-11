@@ -1,8 +1,4 @@
-import {
-	SlashCommandBuilder,
-	MessageFlags,
-	GuildBan,
-} from "discord.js"
+import { SlashCommandBuilder, MessageFlags, GuildBan } from "discord.js"
 import { Timer } from "../../lib/timers"
 import { hasPermissions } from "../../lib/checkPermissions"
 
@@ -23,7 +19,7 @@ module.exports = {
 				.setRequired(false),
 		),
 	async execute(interaction: any) {
-		if (!await hasPermissions(interaction, "BanMembers")) return
+		if (!(await hasPermissions(interaction, "BanMembers"))) return
 		const target = interaction.options.getMentionable("member")
 		let ban: GuildBan | null
 		try {

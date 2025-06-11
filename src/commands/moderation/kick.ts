@@ -1,7 +1,4 @@
-import {
-	SlashCommandBuilder,
-	MessageFlags,
-} from "discord.js"
+import { SlashCommandBuilder, MessageFlags } from "discord.js"
 import { hasPermissions } from "../../lib/checkPermissions"
 
 module.exports = {
@@ -21,7 +18,7 @@ module.exports = {
 				.setRequired(false),
 		),
 	async execute(interaction: any) {
-		if (!await hasPermissions(interaction, "KickMembers")) return
+		if (!(await hasPermissions(interaction, "KickMembers"))) return
 		const target = interaction.options.getMentionable("member")
 		if (!target.kickable)
 			return await interaction.reply({

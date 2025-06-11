@@ -1,7 +1,4 @@
-import {
-	SlashCommandBuilder,
-	GuildChannel,
-} from "discord.js"
+import { SlashCommandBuilder, GuildChannel } from "discord.js"
 import { hasPermissions } from "../../lib/checkPermissions"
 
 module.exports = {
@@ -29,7 +26,7 @@ module.exports = {
 				.setRequired(false),
 		),
 	async execute(interaction: any) {
-		if (!await hasPermissions(interaction, "ManageChannels")) return
+		if (!(await hasPermissions(interaction, "ManageChannels"))) return
 		const channel: GuildChannel =
 			interaction.options.getChannel("channel") || interaction.channel
 		if (!channel.isTextBased())

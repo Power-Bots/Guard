@@ -1,9 +1,7 @@
-import {
-	SlashCommandBuilder,
-	MessageFlags,
-} from "discord.js"
+import { SlashCommandBuilder, MessageFlags } from "discord.js"
 import { parseTime } from "../../lib/parseTime"
 import { hasPermissions } from "../../lib/checkPermissions"
+import { reply } from "@power-bots/powerbotlibrary"
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -30,7 +28,7 @@ module.exports = {
 				.setRequired(false),
 		),
 	async execute(interaction: any) {
-		if (!await hasPermissions(interaction, "MuteMembers")) return
+		if (!(await hasPermissions(interaction, "MuteMembers"))) return
 		const target = interaction.options.getMentionable("member")
 		if (!target.moderatable)
 			return await interaction.reply({
@@ -39,11 +37,7 @@ module.exports = {
 			})
 		const unparsedDuration = interaction.options.getString("duration")
 		let duration = await parseTime(unparsedDuration, { fullTime: false })
-		if (!duration)
-			return await interaction.reply({
-				content: `❌ Invalid Duration`,
-				flags: [MessageFlags.Ephemeral],
-			})
+		if (!duration) return await reply(interaction, "error.invalid_duration")
 		if (duration > 2419200000)
 			return await interaction.reply({
 				content: `❌ Duration must not be longer then 28 days`,

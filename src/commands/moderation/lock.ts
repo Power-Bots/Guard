@@ -42,15 +42,14 @@ module.exports = {
 				.setRequired(false),
 		),
 	async execute(interaction: any) {
-		if (!await hasPermissions(interaction, "ManageChannels")) return
+		if (!(await hasPermissions(interaction, "ManageChannels"))) return
 		const channel: GuildChannel =
 			interaction.options.getChannel("channel") || interaction.channel
 		const everyone: Role = interaction.guild.roles.everyone
 		const unparsedDuration = interaction.options.getString("duration")
 		if (unparsedDuration) {
 			let finishTime = await parseTime(unparsedDuration)
-			if (!finishTime)
-				return await reply(interaction, "error.invalid_duration")
+			if (!finishTime) return await reply(interaction, "error.invalid_duration")
 			await Timer.new({
 				channelID: channel.id,
 				serverID: interaction.guildId,
@@ -71,8 +70,12 @@ module.exports = {
 		const message = interaction.options.getString("message")
 		if (channel.isSendable() && message)
 			await channel.send({ content: message })
-		if (unparsedDuration) return await reply(interaction, "lock_duration.success", {id: channel.id, duration: unparsedDuration})
-		await reply(interaction, "lock.success", {id: channel.id})
+		if (unparsedDuration)
+			return await reply(interaction, "lock_duration.success", {
+				id: channel.id,
+				duration: unparsedDuration,
+			})
+		await reply(interaction, "lock.success", { id: channel.id })
 	},
 	async finishedTimer(timer: Timer) {
 		let channel: GuildChannel | null = null

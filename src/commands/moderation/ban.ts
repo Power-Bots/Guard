@@ -1,11 +1,9 @@
-import {
-	SlashCommandBuilder,
-	MessageFlags,
-} from "discord.js"
+import { SlashCommandBuilder, MessageFlags } from "discord.js"
 import { parseTime } from "../../lib/parseTime"
 import { Timer } from "../../lib/timers"
 import { bot } from "../../main"
 import { hasPermissions } from "../../lib/checkPermissions"
+import { reply } from "@power-bots/powerbotlibrary"
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -30,7 +28,7 @@ module.exports = {
 				.setRequired(false),
 		),
 	async execute(interaction: any) {
-		if (!await hasPermissions(interaction, "BanMembers")) return
+		if (!(await hasPermissions(interaction, "BanMembers"))) return
 		const target = interaction.options.getMentionable("member")
 		if (!target.moderatable)
 			return await interaction.reply({
@@ -40,11 +38,7 @@ module.exports = {
 		const unparsedDuration = interaction.options.getString("duration")
 		if (unparsedDuration) {
 			let unbanTime = await parseTime(unparsedDuration)
-			if (!unbanTime)
-				return await interaction.reply({
-					content: `❌ Invalid Duration`,
-					flags: [MessageFlags.Ephemeral],
-				})
+			if (!unbanTime) return await reply(interaction, "error.invalid_duration")
 			await Timer.new({
 				userID: target.id,
 				serverID: interaction.guildId,

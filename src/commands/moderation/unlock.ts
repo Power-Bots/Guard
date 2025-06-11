@@ -1,8 +1,4 @@
-import {
-	SlashCommandBuilder,
-	GuildChannel,
-	Role,
-} from "discord.js"
+import { SlashCommandBuilder, GuildChannel, Role } from "discord.js"
 import { hasPermissions } from "../../lib/checkPermissions"
 import { reply } from "@power-bots/powerbotlibrary"
 
@@ -19,7 +15,7 @@ module.exports = {
 				.setRequired(false),
 		),
 	async execute(interaction: any) {
-		if (!await hasPermissions(interaction, "ManageChannels")) return
+		if (!(await hasPermissions(interaction, "ManageChannels"))) return
 		const channel: GuildChannel =
 			interaction.options.getChannel("channel") || interaction.channel
 		const everyone: Role = interaction.guild.roles.everyone
@@ -30,6 +26,6 @@ module.exports = {
 			CreatePrivateThreads: null,
 			AddReactions: null,
 		})
-		await reply(interaction, "unlock.success", {id: channel.id})
+		await reply(interaction, "unlock.success", { id: channel.id })
 	},
 }

@@ -1,11 +1,14 @@
 {
 	"mute.success": { "title": "$mute.success.title", "color": "$color.green" },
-	"unlock.success": { "title": "$unlock.success.title", "color": "$color.green" },
+	"unlock.success": {
+		"title": "$unlock.success.title",
+		"color": "$color.green"
+	},
 	"lock.success": { "title": "$lock.success.title", "color": "$color.green" },
 	"lock_duration.success": {
 		"title": "$lock.success.title",
 		"color": "$color.green",
-		"fields": [{"name": "Duration", "value": "$duration"}]
+		"fields": [{ "name": "Duration", "value": "$duration" }]
 	},
 	"error.invalid_duration": {
 		"title": "$error.invalid_duration.title",

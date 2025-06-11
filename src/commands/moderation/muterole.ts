@@ -1,7 +1,5 @@
-import {
-	SlashCommandBuilder,
-} from "discord.js"
-import { Config, ConfigTypes } from "@power-bots/powerbotlibrary"
+import { SlashCommandBuilder } from "discord.js"
+import { Config, ConfigTypes, reply } from "@power-bots/powerbotlibrary"
 import { refreshMuteRole } from "../../lib/refreshMuteRole"
 import { hasPermissions } from "../../lib/checkPermissions"
 
@@ -18,16 +16,13 @@ module.exports = {
 		const subCommand = interaction.options.getSubcommand()
 		switch (subCommand) {
 			case "refresh":
-				if (!await hasPermissions(interaction, "ManageRoles")) return
+				if (!(await hasPermissions(interaction, "ManageRoles"))) return
 				let muteRoleID: string = await Config.get(
 					ConfigTypes.Guild,
 					interaction.guildId,
 					"guild.mute.role",
 				)
-				if (!muteRoleID)
-					return await interaction.reply({
-						content: `❌ No mute role set. To set a mute role use \`/config set guild.mute.role <mute role id>\``,
-					})
+				if (!muteRoleID) return await reply(interaction, "mute.role_invalid")
 				const results = await refreshMuteRole(interaction.guildId, muteRoleID)
 				await interaction.reply({
 					content: `✅ ${results?.successful} successful 
