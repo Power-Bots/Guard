@@ -26,6 +26,11 @@
 		"color": "$color.green",
 		"fields": [{ "name": "Duration", "value": "$duration" }]
 	},
+	"timeout.success": {
+		"title": "$timeout.success.title",
+		"color": "$color.green",
+		"fields": [{ "name": "Duration", "value": "$duration" }]
+	},
 	"muterole.refresh.results": {
 		"title": "$muterole.refresh.results.title",
 		"color": "$color.blue",
@@ -75,6 +80,16 @@
 	},
 	"unban.not_allowed": {
 		"title": "$unban.not_allowed.title",
+		"color": "$color.red",
+		"options": { "ephemeral": true }
+	},
+	"timeout.not_allowed": {
+		"title": "$timeout.not_allowed.title",
+		"color": "$color.red",
+		"options": { "ephemeral": true }
+	},
+	"timeout.invalid_duration": {
+		"title": "$timeout.invalid_duration.title",
 		"color": "$color.red",
 		"options": { "ephemeral": true }
 	},

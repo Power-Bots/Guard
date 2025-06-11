@@ -31,27 +31,16 @@ module.exports = {
 		if (!(await hasPermissions(interaction, "MuteMembers"))) return
 		const target = interaction.options.getMentionable("member")
 		if (!target.moderatable)
-			return await interaction.reply({
-				content: `❌ This member may not be timedout`,
-				flags: [MessageFlags.Ephemeral],
-			})
+			return await reply(interaction, "timeout.not_allowed")
 		const unparsedDuration = interaction.options.getString("duration")
 		let duration = await parseTime(unparsedDuration, { fullTime: false })
 		if (!duration) return await reply(interaction, "error.invalid_duration")
 		if (duration > 2419200000)
-			return await interaction.reply({
-				content: `❌ Duration must not be longer then 28 days`,
-				flags: [MessageFlags.Ephemeral],
-			})
+			return await reply(interaction, "timeout.invalid_duration")
 		await target.timeout(duration, interaction.options.getString("reason"))
-		if (unparsedDuration) {
-			await interaction.reply({
-				content: `✅ Timedout \`${target.user.username}\` for\`${unparsedDuration}\``,
-			})
-		} else {
-			await interaction.reply({
-				content: `✅ Timedout \`${target.user.username}\``,
-			})
-		}
+		await reply(interaction, "timeout.success", {
+			username: target.user.username,
+			duration: unparsedDuration,
+		})
 	},
 }
