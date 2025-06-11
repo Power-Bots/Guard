@@ -40,6 +40,9 @@ module.exports = {
 			delayRaw,
 			interaction.options.getString("reason"),
 		)
-		await reply(interaction, "slowmode.success", {"id": channel.id, "delay": delay})
+		await reply(interaction, "slowmode.success", {
+			id: channel.id,
+			delay: delay,
+		})
 	},
 }

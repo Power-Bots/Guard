@@ -28,13 +28,12 @@ module.exports = {
 		} catch {
 			ban = null
 		}
-		if (!ban)
-			return await reply(interaction, "unban.not_allowed")
+		if (!ban) return await reply(interaction, "unban.not_allowed")
 		Timer.get({ userID: target.id, serverID: interaction.guildId, type: "ban" })
 		await interaction.guild.bans.remove(
 			target.id,
 			interaction.options.getString("reason"),
 		)
-		await reply(interaction, "unban.success", {username: target.username})
+		await reply(interaction, "unban.success", { username: target.username })
 	},
 }
