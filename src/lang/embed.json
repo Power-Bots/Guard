@@ -12,6 +12,10 @@
 	"unban.success": { "title": "$unban.success.title", "color": "$color.green" },
 	"kick.success": { "title": "$kick.success.title", "color": "$color.green" },
 	"ban.success": { "title": "$ban.success.title", "color": "$color.green" },
+	"untimeout.success": {
+		"title": "$untimeout.success.title",
+		"color": "$color.green"
+	},
 	"slowmode.success": {
 		"title": "$slowmode.success.title",
 		"color": "$color.green"
@@ -85,6 +89,11 @@
 	},
 	"timeout.not_allowed": {
 		"title": "$timeout.not_allowed.title",
+		"color": "$color.red",
+		"options": { "ephemeral": true }
+	},
+	"untimeout.not_allowed": {
+		"title": "$untimeout.not_allowed.title",
 		"color": "$color.red",
 		"options": { "ephemeral": true }
 	},
