@@ -30,11 +30,7 @@ module.exports = {
 	async execute(interaction: any) {
 		if (!(await hasPermissions(interaction, "BanMembers"))) return
 		const target = interaction.options.getMentionable("member")
-		if (!target.moderatable)
-			return await interaction.reply({
-				content: `❌ This member may not be banned`,
-				flags: [MessageFlags.Ephemeral],
-			})
+		if (!target.moderatable) return await reply(interaction, "ban.not_allowed")
 		const unparsedDuration = interaction.options.getString("duration")
 		if (unparsedDuration) {
 			let unbanTime = await parseTime(unparsedDuration)
@@ -48,12 +44,13 @@ module.exports = {
 		}
 		target.ban({ reason: interaction.options.getString("reason") })
 		if (unparsedDuration) {
-			await interaction.reply({
-				content: `✅ Banned \`${target.user.username}\` for\`${unparsedDuration}\``,
+			await reply(interaction, "ban_duration.success", {
+				username: target.user.username,
+				duration: unparsedDuration,
 			})
 		} else {
-			await interaction.reply({
-				content: `✅ Banned \`${target.user.username}\``,
+			await reply(interaction, "ban.success", {
+				username: target.user.username,
 			})
 		}
 	},
