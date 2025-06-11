@@ -9,6 +9,7 @@ import { parseTime } from "../../lib/parseTime"
 import { Timer } from "../../lib/timers"
 import { bot } from "../../main"
 import { hasPermissions } from "../../lib/checkPermissions"
+import { reply } from "@power-bots/powerbotlibrary"
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -49,10 +50,7 @@ module.exports = {
 		if (unparsedDuration) {
 			let finishTime = await parseTime(unparsedDuration)
 			if (!finishTime)
-				return await interaction.reply({
-					content: `❌ Invalid Duration`,
-					flags: [MessageFlags.Ephemeral],
-				})
+				return await reply(interaction, "error.invalid_duration")
 			await Timer.new({
 				channelID: channel.id,
 				serverID: interaction.guildId,
@@ -73,13 +71,8 @@ module.exports = {
 		const message = interaction.options.getString("message")
 		if (channel.isSendable() && message)
 			await channel.send({ content: message })
-		if (unparsedDuration) {
-			await interaction.reply({
-				content: `✅ Locked <#${channel.id}> for\`${unparsedDuration}\``,
-			})
-		} else {
-			await interaction.reply({ content: `✅ Locked <#${channel.id}>` })
-		}
+		if (unparsedDuration) return await reply(interaction, "lock_duration.success", {id: channel.id, duration: unparsedDuration})
+		await reply(interaction, "lock.success", {id: channel.id})
 	},
 	async finishedTimer(timer: Timer) {
 		let channel: GuildChannel | null = null

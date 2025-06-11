@@ -4,6 +4,7 @@ import {
 	Role,
 } from "discord.js"
 import { hasPermissions } from "../../lib/checkPermissions"
+import { reply } from "@power-bots/powerbotlibrary"
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -29,6 +30,6 @@ module.exports = {
 			CreatePrivateThreads: null,
 			AddReactions: null,
 		})
-		await interaction.reply({ content: `✅ Unlocked <#${channel.id}>` })
+		await reply(interaction, "unlock.success", {id: channel.id})
 	},
 }

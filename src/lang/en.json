@@ -1,5 +1,8 @@
 {
 	"mute.success.title": "✅ Muted `{{username}}`",
+	"unlock.success.title": "✅ Unlocked <#{{id}}>",
+	"lock.success.title": "✅ Locked <#{{id}}>",
+	"duration": "`{{duration}}`",
 	"mute.role_invalid.title": "❌ Invalid Mute Role",
 	"mute.role_invalid.description": "Your mute role is either:\n\n1. Not been set yet\n2. Is not an actual role\n\nTo set a mute role use `/config set guild.mute.role <mute role id>`",
 	"error.invalid_duration.title": "❌ Invalid Duration",
