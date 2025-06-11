@@ -1,6 +1,7 @@
 import { SlashCommandBuilder, MessageFlags, GuildBan } from "discord.js"
 import { Timer } from "../../lib/timers"
 import { hasPermissions } from "../../lib/checkPermissions"
+import { reply } from "@power-bots/powerbotlibrary"
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -28,15 +29,12 @@ module.exports = {
 			ban = null
 		}
 		if (!ban)
-			return await interaction.reply({
-				content: `❌ This member is not banned`,
-				flags: [MessageFlags.Ephemeral],
-			})
+			return await reply(interaction, "unban.not_allowed")
 		Timer.get({ userID: target.id, serverID: interaction.guildId, type: "ban" })
 		await interaction.guild.bans.remove(
 			target.id,
 			interaction.options.getString("reason"),
 		)
-		await interaction.reply({ content: `✅ Unbanned \`${target.username}\`` })
+		await reply(interaction, "unban.success", {username: target.username})
 	},
 }

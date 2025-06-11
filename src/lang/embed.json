@@ -9,6 +9,7 @@
 		"color": "$color.green"
 	},
 	"lock.success": { "title": "$lock.success.title", "color": "$color.green" },
+	"unban.success": { "title": "$unban.success.title", "color": "$color.green" },
 	"kick.success": { "title": "$kick.success.title", "color": "$color.green" },
 	"slowmode.success": { "title": "$slowmode.success.title", "color": "$color.green" },
 	"lock_duration.success": {
@@ -55,6 +56,11 @@
 	},
 	"kick.not_allowed": {
 		"title": "$kick.not_allowed.title",
+		"color": "$color.red",
+		"options": { "ephemeral": true }
+	},
+	"unban.not_allowed": {
+		"title": "$unban.not_allowed.title",
 		"color": "$color.red",
 		"options": { "ephemeral": true }
 	},
