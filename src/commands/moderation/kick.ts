@@ -1,8 +1,6 @@
-import {
-	SlashCommandBuilder,
-	PermissionFlagsBits,
-	MessageFlags,
-} from "discord.js"
+import { SlashCommandBuilder, MessageFlags } from "discord.js"
+import { hasPermissions } from "../../lib/checkPermissions"
+import { reply } from "@power-bots/powerbotlibrary"
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -21,25 +19,10 @@ module.exports = {
 				.setRequired(false),
 		),
 	async execute(interaction: any) {
-		if (!interaction.appPermissions.has(PermissionFlagsBits.KickMembers))
-			return await interaction.reply({
-				content: `❌ I don't have the \`Kick Members\` permission!`,
-				flags: [MessageFlags.Ephemeral],
-			})
-		if (!interaction.member.permissions.has(PermissionFlagsBits.KickMembers))
-			return await interaction.reply({
-				content: `❌ You don't have the \`Kick Members\` permission`,
-				flags: [MessageFlags.Ephemeral],
-			})
+		if (!(await hasPermissions(interaction, "KickMembers"))) return
 		const target = interaction.options.getMentionable("member")
-		if (!target.kickable)
-			return await interaction.reply({
-				content: `❌ This member may not be kicked`,
-				flags: [MessageFlags.Ephemeral],
-			})
+		if (!target.kickable) return await reply(interaction, "kick.not_allowed")
 		target.kick(interaction.options.getString("reason"))
-		await interaction.reply({
-			content: `✅ Kicked \`${target.user.username}\``,
-		})
+		await reply(interaction, "kick.success", { username: target.user.username })
 	},
 }

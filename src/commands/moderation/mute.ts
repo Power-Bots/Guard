@@ -1,12 +1,10 @@
-import {
-	SlashCommandBuilder,
-	PermissionFlagsBits,
-	MessageFlags,
-} from "discord.js"
+import { SlashCommandBuilder } from "discord.js"
 import { Timer } from "../../lib/timers"
 import { bot } from "../../main"
 import { Config, ConfigTypes } from "@power-bots/powerbotlibrary"
 import { parseTime } from "../../lib/parseTime"
+import { reply } from "@power-bots/powerbotlibrary"
+import { hasPermissions } from "../../lib/checkPermissions"
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -31,41 +29,22 @@ module.exports = {
 				.setRequired(false),
 		),
 	async execute(interaction: any) {
-		if (!interaction.appPermissions.has(PermissionFlagsBits.ManageRoles))
-			return await interaction.reply({
-				content: `❌ I don't have the \`Manage Roles\` permission!`,
-				flags: [MessageFlags.Ephemeral],
-			})
-		if (!interaction.member.permissions.has(PermissionFlagsBits.ManageRoles))
-			return await interaction.reply({
-				content: `❌ You don't have the \`Manage Roles\` permission`,
-				flags: [MessageFlags.Ephemeral],
-			})
+		if (!(await hasPermissions(interaction, "ManageRoles"))) return
 		const target = interaction.options.getMentionable("member")
 		let muteRoleID: string = await Config.get(
 			ConfigTypes.Guild,
 			interaction.guildId,
 			"guild.mute.role",
 		)
-		if (!muteRoleID)
-			return await interaction.reply({
-				content: `❌ No mute role set. To set a mute role use \`/config set guild.mute.role <mute role id>\``,
-			})
+		if (!muteRoleID) return await reply(interaction, "mute.role_invalid")
 		let guild = await bot.getGuild(interaction.guildId)
 		if (!guild) return
 		let role = await bot.getRole(muteRoleID, guild)
-		if (!role)
-			return await interaction.reply({
-				content: `❌ No mute role set. To set a mute role use \`/config set guild.mute.role <mute role id>\``,
-			})
+		if (!role) return await reply(interaction, "mute.role_invalid")
 		const unparsedDuration = interaction.options.getString("duration")
 		if (unparsedDuration) {
 			let finishTime = await parseTime(unparsedDuration)
-			if (!finishTime)
-				return await interaction.reply({
-					content: `❌ Invalid Duration`,
-					flags: [MessageFlags.Ephemeral],
-				})
+			if (!finishTime) return await reply(interaction, "error.invalid_duration")
 			Timer.new({
 				userID: target.id,
 				serverID: interaction.guildId,
@@ -77,7 +56,7 @@ module.exports = {
 			roles: [role],
 			reason: interaction.options.getMentionable("reason"),
 		})
-		await interaction.reply({ content: `✅ Muted \`${target.user.username}\`` })
+		await reply(interaction, "mute.success", { username: target.user.username })
 	},
 	async finishedTimer(timer: Timer) {
 		if (!(timer.serverID && timer.userID)) return

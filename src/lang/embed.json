@@ -1,0 +1,115 @@
+{
+	"mute.success": { "title": "$mute.success.title", "color": "$color.green" },
+	"unmute.success": {
+		"title": "$unmute.success.title",
+		"color": "$color.green"
+	},
+	"unlock.success": {
+		"title": "$unlock.success.title",
+		"color": "$color.green"
+	},
+	"lock.success": { "title": "$lock.success.title", "color": "$color.green" },
+	"unban.success": { "title": "$unban.success.title", "color": "$color.green" },
+	"kick.success": { "title": "$kick.success.title", "color": "$color.green" },
+	"ban.success": { "title": "$ban.success.title", "color": "$color.green" },
+	"untimeout.success": {
+		"title": "$untimeout.success.title",
+		"color": "$color.green"
+	},
+	"slowmode.success": {
+		"title": "$slowmode.success.title",
+		"color": "$color.green"
+	},
+	"lock_duration.success": {
+		"title": "$lock.success.title",
+		"color": "$color.green",
+		"fields": [{ "name": "Duration", "value": "$duration" }]
+	},
+	"ban_duration.success": {
+		"title": "$ban.success.title",
+		"color": "$color.green",
+		"fields": [{ "name": "Duration", "value": "$duration" }]
+	},
+	"timeout.success": {
+		"title": "$timeout.success.title",
+		"color": "$color.green",
+		"fields": [{ "name": "Duration", "value": "$duration" }]
+	},
+	"muterole.refresh.results": {
+		"title": "$muterole.refresh.results.title",
+		"color": "$color.blue",
+		"fields": [
+			{
+				"name": "✅",
+				"value": "$muterole.refresh.results.successful",
+				"inline": true
+			},
+			{
+				"name": "❌",
+				"value": "$muterole.refresh.results.fails",
+				"inline": true
+			}
+		]
+	},
+	"error.invalid_duration": {
+		"title": "$error.invalid_duration.title",
+		"color": "$color.red",
+		"options": { "ephemeral": true }
+	},
+	"error.invalid_channel": {
+		"title": "$error.invalid_channel.title",
+		"color": "$color.red",
+		"options": { "ephemeral": true }
+	},
+	"error.invalid_delay": {
+		"title": "$error.invalid_delay.title",
+		"color": "$color.red",
+		"options": { "ephemeral": true }
+	},
+	"mute.role_invalid": {
+		"title": "$mute.role_invalid.title",
+		"description": "$mute.role_invalid.description",
+		"color": "$color.red",
+		"options": { "ephemeral": true }
+	},
+	"kick.not_allowed": {
+		"title": "$kick.not_allowed.title",
+		"color": "$color.red",
+		"options": { "ephemeral": true }
+	},
+	"ban.not_allowed": {
+		"title": "$ban.not_allowed.title",
+		"color": "$color.red",
+		"options": { "ephemeral": true }
+	},
+	"unban.not_allowed": {
+		"title": "$unban.not_allowed.title",
+		"color": "$color.red",
+		"options": { "ephemeral": true }
+	},
+	"timeout.not_allowed": {
+		"title": "$timeout.not_allowed.title",
+		"color": "$color.red",
+		"options": { "ephemeral": true }
+	},
+	"untimeout.not_allowed": {
+		"title": "$untimeout.not_allowed.title",
+		"color": "$color.red",
+		"options": { "ephemeral": true }
+	},
+	"timeout.invalid_duration": {
+		"title": "$timeout.invalid_duration.title",
+		"color": "$color.red",
+		"options": { "ephemeral": true }
+	},
+	"error.bot_missing_permission": {
+		"title": "$error.bot_missing_permission.title",
+		"color": "$color.red",
+		"options": { "ephemeral": true }
+	},
+	"error.user_missing_permission": {
+		"title": "$error.user_missing_permission.title",
+		"color": "$color.red",
+		"options": { "ephemeral": true }
+	}
+}

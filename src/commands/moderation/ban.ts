@@ -1,11 +1,9 @@
-import {
-	SlashCommandBuilder,
-	PermissionFlagsBits,
-	MessageFlags,
-} from "discord.js"
+import { SlashCommandBuilder, MessageFlags } from "discord.js"
 import { parseTime } from "../../lib/parseTime"
 import { Timer } from "../../lib/timers"
 import { bot } from "../../main"
+import { hasPermissions } from "../../lib/checkPermissions"
+import { reply } from "@power-bots/powerbotlibrary"
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -30,30 +28,13 @@ module.exports = {
 				.setRequired(false),
 		),
 	async execute(interaction: any) {
-		if (!interaction.appPermissions.has(PermissionFlagsBits.BanMembers))
-			return await interaction.reply({
-				content: `❌ I don't have the \`Ban Members\` permission!`,
-				flags: [MessageFlags.Ephemeral],
-			})
-		if (!interaction.member.permissions.has(PermissionFlagsBits.BanMembers))
-			return await interaction.reply({
-				content: `❌ You don't have the \`Ban Members\` permission`,
-				flags: [MessageFlags.Ephemeral],
-			})
+		if (!(await hasPermissions(interaction, "BanMembers"))) return
 		const target = interaction.options.getMentionable("member")
-		if (!target.moderatable)
-			return await interaction.reply({
-				content: `❌ This member may not be banned`,
-				flags: [MessageFlags.Ephemeral],
-			})
+		if (!target.moderatable) return await reply(interaction, "ban.not_allowed")
 		const unparsedDuration = interaction.options.getString("duration")
 		if (unparsedDuration) {
 			let unbanTime = await parseTime(unparsedDuration)
-			if (!unbanTime)
-				return await interaction.reply({
-					content: `❌ Invalid Duration`,
-					flags: [MessageFlags.Ephemeral],
-				})
+			if (!unbanTime) return await reply(interaction, "error.invalid_duration")
 			await Timer.new({
 				userID: target.id,
 				serverID: interaction.guildId,
@@ -63,12 +44,13 @@ module.exports = {
 		}
 		target.ban({ reason: interaction.options.getString("reason") })
 		if (unparsedDuration) {
-			await interaction.reply({
-				content: `✅ Banned \`${target.user.username}\` for\`${unparsedDuration}\``,
+			await reply(interaction, "ban_duration.success", {
+				username: target.user.username,
+				duration: unparsedDuration,
 			})
 		} else {
-			await interaction.reply({
-				content: `✅ Banned \`${target.user.username}\``,
+			await reply(interaction, "ban.success", {
+				username: target.user.username,
 			})
 		}
 	},

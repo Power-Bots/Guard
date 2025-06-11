@@ -8,6 +8,8 @@ import {
 import { parseTime } from "../../lib/parseTime"
 import { Timer } from "../../lib/timers"
 import { bot } from "../../main"
+import { hasPermissions } from "../../lib/checkPermissions"
+import { reply } from "@power-bots/powerbotlibrary"
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -40,27 +42,14 @@ module.exports = {
 				.setRequired(false),
 		),
 	async execute(interaction: any) {
-		if (!interaction.appPermissions.has(PermissionFlagsBits.ManageChannels))
-			return await interaction.reply({
-				content: `❌ I don't have the \`Manage Channels\` permission!`,
-				flags: [MessageFlags.Ephemeral],
-			})
-		if (!interaction.member.permissions.has(PermissionFlagsBits.ManageChannels))
-			return await interaction.reply({
-				content: `❌ You don't have the \`Manage Channels\` permission`,
-				flags: [MessageFlags.Ephemeral],
-			})
+		if (!(await hasPermissions(interaction, "ManageChannels"))) return
 		const channel: GuildChannel =
 			interaction.options.getChannel("channel") || interaction.channel
 		const everyone: Role = interaction.guild.roles.everyone
 		const unparsedDuration = interaction.options.getString("duration")
 		if (unparsedDuration) {
 			let finishTime = await parseTime(unparsedDuration)
-			if (!finishTime)
-				return await interaction.reply({
-					content: `❌ Invalid Duration`,
-					flags: [MessageFlags.Ephemeral],
-				})
+			if (!finishTime) return await reply(interaction, "error.invalid_duration")
 			await Timer.new({
 				channelID: channel.id,
 				serverID: interaction.guildId,
@@ -81,13 +70,12 @@ module.exports = {
 		const message = interaction.options.getString("message")
 		if (channel.isSendable() && message)
 			await channel.send({ content: message })
-		if (unparsedDuration) {
-			await interaction.reply({
-				content: `✅ Locked <#${channel.id}> for\`${unparsedDuration}\``,
+		if (unparsedDuration)
+			return await reply(interaction, "lock_duration.success", {
+				id: channel.id,
+				duration: unparsedDuration,
 			})
-		} else {
-			await interaction.reply({ content: `✅ Locked <#${channel.id}>` })
-		}
+		await reply(interaction, "lock.success", { id: channel.id })
 	},
 	async finishedTimer(timer: Timer) {
 		let channel: GuildChannel | null = null

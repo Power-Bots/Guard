@@ -1,12 +1,7 @@
-import {
-	SlashCommandBuilder,
-	PermissionFlagsBits,
-	MessageFlags,
-	Guild,
-	Role,
-} from "discord.js"
+import { SlashCommandBuilder, Guild, Role } from "discord.js"
 import { bot } from "../../main"
-import { Config, ConfigTypes } from "@power-bots/powerbotlibrary"
+import { Config, ConfigTypes, reply } from "@power-bots/powerbotlibrary"
+import { hasPermissions } from "../../lib/checkPermissions"
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -25,16 +20,7 @@ module.exports = {
 				.setRequired(false),
 		),
 	async execute(interaction: any) {
-		if (!interaction.appPermissions.has(PermissionFlagsBits.ManageRoles))
-			return await interaction.reply({
-				content: `❌ I don't have the \`Manage Roles\` permission!`,
-				flags: [MessageFlags.Ephemeral],
-			})
-		if (!interaction.member.permissions.has(PermissionFlagsBits.ManageRoles))
-			return await interaction.reply({
-				content: `❌ You don't have the \`Manage Roles\` permission`,
-				flags: [MessageFlags.Ephemeral],
-			})
+		if (!(await hasPermissions(interaction, "ManageRoles"))) return
 		const target = interaction.options.getMentionable("member")
 		let guild: Guild | null = null
 		let role: Role | null = null
@@ -43,10 +29,7 @@ module.exports = {
 			interaction.guildId,
 			"guild.mute.role",
 		)
-		if (!muteRoleID)
-			return await interaction.reply({
-				content: `❌ No mute role set. To set a mute role use \`/config set guild.mute.role <mute role id>\``,
-			})
+		if (!muteRoleID) return await reply(interaction, "mute.role_invalid")
 		try {
 			guild = await bot.client.guilds.fetch(interaction.guildId)
 		} catch {}
@@ -54,13 +37,10 @@ module.exports = {
 		try {
 			role = await guild.roles.fetch(muteRoleID)
 		} catch {}
-		if (!role)
-			return await interaction.reply({
-				content: `❌ No mute role set. To set a mute role use \`/config set guild.mute.role <mute role id>\``,
-			})
+		if (!role) return await reply(interaction, "mute.role_invalid")
 		await target.roles.remove(role)
-		await interaction.reply({
-			content: `✅ Unmuted \`${target.user.username}\``,
+		await reply(interaction, "unmute.success", {
+			username: target.user.username,
 		})
 	},
 }

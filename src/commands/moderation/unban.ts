@@ -1,10 +1,7 @@
-import {
-	SlashCommandBuilder,
-	PermissionFlagsBits,
-	MessageFlags,
-	GuildBan,
-} from "discord.js"
+import { SlashCommandBuilder, MessageFlags, GuildBan } from "discord.js"
 import { Timer } from "../../lib/timers"
+import { hasPermissions } from "../../lib/checkPermissions"
+import { reply } from "@power-bots/powerbotlibrary"
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -23,16 +20,7 @@ module.exports = {
 				.setRequired(false),
 		),
 	async execute(interaction: any) {
-		if (!interaction.appPermissions.has(PermissionFlagsBits.BanMembers))
-			return await interaction.reply({
-				content: `❌ I don't have the \`Ban Members\` permission!`,
-				flags: [MessageFlags.Ephemeral],
-			})
-		if (!interaction.member.permissions.has(PermissionFlagsBits.BanMembers))
-			return await interaction.reply({
-				content: `❌ You don't have the \`Ban Members\` permission`,
-				flags: [MessageFlags.Ephemeral],
-			})
+		if (!(await hasPermissions(interaction, "BanMembers"))) return
 		const target = interaction.options.getMentionable("member")
 		let ban: GuildBan | null
 		try {
@@ -40,16 +28,12 @@ module.exports = {
 		} catch {
 			ban = null
 		}
-		if (!ban)
-			return await interaction.reply({
-				content: `❌ This member is not banned`,
-				flags: [MessageFlags.Ephemeral],
-			})
+		if (!ban) return await reply(interaction, "unban.not_allowed")
 		Timer.get({ userID: target.id, serverID: interaction.guildId, type: "ban" })
 		await interaction.guild.bans.remove(
 			target.id,
 			interaction.options.getString("reason"),
 		)
-		await interaction.reply({ content: `✅ Unbanned \`${target.username}\`` })
+		await reply(interaction, "unban.success", { username: target.username })
 	},
 }

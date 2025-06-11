@@ -1,9 +1,6 @@
-import {
-	SlashCommandBuilder,
-	PermissionFlagsBits,
-	MessageFlags,
-	GuildChannel,
-} from "discord.js"
+import { SlashCommandBuilder, GuildChannel } from "discord.js"
+import { hasPermissions } from "../../lib/checkPermissions"
+import { reply } from "@power-bots/powerbotlibrary"
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -30,30 +27,22 @@ module.exports = {
 				.setRequired(false),
 		),
 	async execute(interaction: any) {
-		if (!interaction.appPermissions.has(PermissionFlagsBits.ManageChannels))
-			return await interaction.reply({
-				content: `❌ I don't have the \`Manage Channels\` permission!`,
-				flags: [MessageFlags.Ephemeral],
-			})
-		if (!interaction.member.permissions.has(PermissionFlagsBits.ManageChannels))
-			return await interaction.reply({
-				content: `❌ You don't have the \`Manage Channels\` permission`,
-				flags: [MessageFlags.Ephemeral],
-			})
+		if (!(await hasPermissions(interaction, "ManageChannels"))) return
 		const channel: GuildChannel =
 			interaction.options.getChannel("channel") || interaction.channel
 		if (!channel.isTextBased())
-			return await interaction.reply({ content: `❌ Invalid Channel` })
+			return await reply(interaction, "error.invalid_channel")
 		const delayRaw = interaction.options.getString("delay")
 		const delay = parseInt(delayRaw)
 		if (delay != delayRaw)
-			return await interaction.reply({ content: `❌ Invalid Delay` })
+			return await reply(interaction, "error.invalid_delay")
 		await channel.setRateLimitPerUser(
 			delayRaw,
 			interaction.options.getString("reason"),
 		)
-		await interaction.reply({
-			content: `✅ Set slowmmode for <#${channel.id}> to \`${delay}s\``,
+		await reply(interaction, "slowmode.success", {
+			id: channel.id,
+			delay: delay,
 		})
 	},
 }

@@ -1,10 +1,7 @@
-import {
-	SlashCommandBuilder,
-	PermissionFlagsBits,
-	MessageFlags,
-} from "discord.js"
-import { Config, ConfigTypes } from "@power-bots/powerbotlibrary"
+import { SlashCommandBuilder } from "discord.js"
+import { Config, ConfigTypes, reply } from "@power-bots/powerbotlibrary"
 import { refreshMuteRole } from "../../lib/refreshMuteRole"
+import { hasPermissions } from "../../lib/checkPermissions"
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -19,31 +16,17 @@ module.exports = {
 		const subCommand = interaction.options.getSubcommand()
 		switch (subCommand) {
 			case "refresh":
-				if (!interaction.appPermissions.has(PermissionFlagsBits.ManageRoles))
-					return await interaction.reply({
-						content: `❌ I don't have the \`Manage Roles\` permission!`,
-						flags: [MessageFlags.Ephemeral],
-					})
-				if (
-					!interaction.member.permissions.has(PermissionFlagsBits.ManageRoles)
-				)
-					return await interaction.reply({
-						content: `❌ You don't have the \`Manage Roles\` permission`,
-						flags: [MessageFlags.Ephemeral],
-					})
+				if (!(await hasPermissions(interaction, "ManageRoles"))) return
 				let muteRoleID: string = await Config.get(
 					ConfigTypes.Guild,
 					interaction.guildId,
 					"guild.mute.role",
 				)
-				if (!muteRoleID)
-					return await interaction.reply({
-						content: `❌ No mute role set. To set a mute role use \`/config set guild.mute.role <mute role id>\``,
-					})
+				if (!muteRoleID) return await reply(interaction, "mute.role_invalid")
 				const results = await refreshMuteRole(interaction.guildId, muteRoleID)
-				await interaction.reply({
-					content: `✅ ${results?.successful} successful 
-❌ ${results?.fails} failed`,
+				await reply(interaction, "muterole.refresh.results", {
+					fails: results?.fails || 0,
+					successful: results?.successful || 0,
 				})
 				break
 			default:
