@@ -12,16 +12,6 @@ Config.onSet("guild.mute.role", async (config: any) => {
 	await refreshMuteRole(config.id, config.value)
 })
 
-bot.client.on(Events.ChannelCreate, async (channel: GuildChannel) => {
-	const muteRoleID = await Config.get(
-		ConfigTypes.Guild,
-		channel.guildId,
-		"guild.mute.role",
-	)
-	if (!muteRoleID) return
-	await refreshMuteRole(channel.guildId, muteRoleID)
-})
-
 // Check for finished timers every 1 second
 async function timerCheck() {
 	const timers = await Timer.getFinishedTimers()
