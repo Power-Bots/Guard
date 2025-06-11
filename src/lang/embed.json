@@ -1,5 +1,9 @@
 {
 	"mute.success": { "title": "$mute.success.title", "color": "$color.green" },
+	"unmute.success": {
+		"title": "$unmute.success.title",
+		"color": "$color.green"
+	},
 	"unlock.success": {
 		"title": "$unlock.success.title",
 		"color": "$color.green"

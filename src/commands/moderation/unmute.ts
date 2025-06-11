@@ -39,8 +39,8 @@ module.exports = {
 		} catch {}
 		if (!role) return await reply(interaction, "mute.role_invalid")
 		await target.roles.remove(role)
-		await interaction.reply({
-			content: `✅ Unmuted \`${target.user.username}\``,
+		await reply(interaction, "unmute.success", {
+			username: target.user.username,
 		})
 	},
 }
