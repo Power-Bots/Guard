@@ -9,6 +9,7 @@
 		"color": "$color.green"
 	},
 	"lock.success": { "title": "$lock.success.title", "color": "$color.green" },
+	"kick.success": { "title": "$kick.success.title", "color": "$color.green" },
 	"lock_duration.success": {
 		"title": "$lock.success.title",
 		"color": "$color.green",
@@ -22,6 +23,11 @@
 	"mute.role_invalid": {
 		"title": "$mute.role_invalid.title",
 		"description": "$mute.role_invalid.description",
+		"color": "$color.red",
+		"options": { "ephemeral": true }
+	},
+	"kick.not_allowed": {
+		"title": "$kick.not_allowed.title",
 		"color": "$color.red",
 		"options": { "ephemeral": true }
 	},
