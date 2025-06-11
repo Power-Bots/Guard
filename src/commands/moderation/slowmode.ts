@@ -1,5 +1,6 @@
 import { SlashCommandBuilder, GuildChannel } from "discord.js"
 import { hasPermissions } from "../../lib/checkPermissions"
+import { reply } from "@power-bots/powerbotlibrary"
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -30,17 +31,15 @@ module.exports = {
 		const channel: GuildChannel =
 			interaction.options.getChannel("channel") || interaction.channel
 		if (!channel.isTextBased())
-			return await interaction.reply({ content: `❌ Invalid Channel` })
+			return await reply(interaction, "error.invalid_channel")
 		const delayRaw = interaction.options.getString("delay")
 		const delay = parseInt(delayRaw)
 		if (delay != delayRaw)
-			return await interaction.reply({ content: `❌ Invalid Delay` })
+			return await reply(interaction, "error.invalid_delay")
 		await channel.setRateLimitPerUser(
 			delayRaw,
 			interaction.options.getString("reason"),
 		)
-		await interaction.reply({
-			content: `✅ Set slowmmode for <#${channel.id}> to \`${delay}s\``,
-		})
+		await reply(interaction, "slowmode.success", {"id": channel.id, "delay": delay})
 	},
 }

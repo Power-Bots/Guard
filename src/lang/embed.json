@@ -10,6 +10,7 @@
 	},
 	"lock.success": { "title": "$lock.success.title", "color": "$color.green" },
 	"kick.success": { "title": "$kick.success.title", "color": "$color.green" },
+	"slowmode.success": { "title": "$slowmode.success.title", "color": "$color.green" },
 	"lock_duration.success": {
 		"title": "$lock.success.title",
 		"color": "$color.green",
@@ -33,6 +34,16 @@
 	},
 	"error.invalid_duration": {
 		"title": "$error.invalid_duration.title",
+		"color": "$color.red",
+		"options": { "ephemeral": true }
+	},
+	"error.invalid_channel": {
+		"title": "$error.invalid_channel.title",
+		"color": "$color.red",
+		"options": { "ephemeral": true }
+	},
+	"error.invalid_delay": {
+		"title": "$error.invalid_delay.title",
 		"color": "$color.red",
 		"options": { "ephemeral": true }
 	},
