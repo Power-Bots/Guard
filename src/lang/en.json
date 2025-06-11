@@ -11,11 +11,15 @@
 	"error.invalid_duration.title": "❌ Invalid Duration",
 	"error.bot_missing_permission.title": "❌ I don't have the `{{permission}}` permission!",
 	"error.user_missing_permission.title": "❌ You don't have the `{{permission}}` permission!",
+	"muterole.refresh.results.title": "Mute Role Refresh Results",
+	"muterole.refresh.results.fails": "{{fails}}",
+	"muterole.refresh.results.successful": "{{successful}}",
 	"permission.ManageRoles": "Manage Roles",
 	"permission.ManageChannels": "Manage Channels",
 	"permission.BanMembers": "Ban Members",
 	"permission.KickMembers": "Kick Members",
 	"permission.MuteMembers": "Timeout Members",
+	"color.blue": 3447003,
 	"color.green": 4052839,
 	"color.red": 15548997
 }

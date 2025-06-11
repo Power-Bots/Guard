@@ -24,9 +24,9 @@ module.exports = {
 				)
 				if (!muteRoleID) return await reply(interaction, "mute.role_invalid")
 				const results = await refreshMuteRole(interaction.guildId, muteRoleID)
-				await interaction.reply({
-					content: `✅ ${results?.successful} successful 
-❌ ${results?.fails} failed`,
+				await reply(interaction, "muterole.refresh.results", {
+					fails: results?.fails || 0,
+					successful: results?.successful || 0,
 				})
 				break
 			default:

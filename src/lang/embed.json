@@ -15,6 +15,22 @@
 		"color": "$color.green",
 		"fields": [{ "name": "Duration", "value": "$duration" }]
 	},
+	"muterole.refresh.results": {
+		"title": "$muterole.refresh.results.title",
+		"color": "$color.blue",
+		"fields": [
+			{
+				"name": "✅",
+				"value": "$muterole.refresh.results.successful",
+				"inline": true
+			},
+			{
+				"name": "❌",
+				"value": "$muterole.refresh.results.fails",
+				"inline": true
+			}
+		]
+	},
 	"error.invalid_duration": {
 		"title": "$error.invalid_duration.title",
 		"color": "$color.red",
