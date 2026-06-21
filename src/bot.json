@@ -1,1 +1,7 @@
-{ "configs": { "guild": ["mute.role"] } }
+{
+	"configs": { "guild": ["mute.role"] },
+	"name": "Guard",
+	"icon": "https://i.ibb.co/cKmhHJ0d/Guard-Large.jpg",
+	"description": "Powerful moderation tools for Discord powered by PowerBots.",
+	"repo": "Power-Bots/Guard"
+}
