@@ -64,12 +64,12 @@
 		"color": "$color.blue",
 		"fields": [
 			{
-				"name": "✅",
+				"name": "$check",
 				"value": "$muterole.refresh.results.successful",
 				"inline": true
 			},
 			{
-				"name": "❌",
+				"name": "$cross",
 				"value": "$muterole.refresh.results.fails",
 				"inline": true
 			}
