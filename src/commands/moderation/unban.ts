@@ -29,7 +29,14 @@ module.exports = {
 			ban = null
 		}
 		if (!ban) return await reply(interaction, "unban.not_allowed")
-		Timer.get({ userID: target.id, serverID: interaction.guildId, type: "ban" })
+		const timers = await Timer.get({
+			userID: target.id,
+			serverID: interaction.guildId,
+			type: "ban",
+		})
+		for (const timer of timers ?? []) {
+			timer.del()
+		}
 		await interaction.guild.bans.remove(
 			target.id,
 			interaction.options.getString("reason"),
