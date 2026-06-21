@@ -52,10 +52,7 @@ module.exports = {
 				type: "mute",
 			})
 		}
-		await target.edit({
-			roles: [role],
-			reason: interaction.options.getMentionable("reason"),
-		})
+		await target.roles.add(role, interaction.options.getString("reason"))
 		await reply(interaction, "mute.success", { username: target.user.username })
 	},
 	async finishedTimer(timer: Timer) {
