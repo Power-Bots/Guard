@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, MessageFlags } from "discord.js"
+import { SlashCommandBuilder, MessageFlags, User } from "discord.js"
 import { parseTime } from "../../lib/parseTime"
 import { Timer } from "../../lib/timers"
 import { bot } from "../../main"
@@ -29,8 +29,10 @@ module.exports = {
 		),
 	async execute(interaction: any) {
 		if (!(await hasPermissions(interaction, "BanMembers"))) return
-		const target = interaction.options.getMentionable("member")
-		if (!target.moderatable) return await reply(interaction, "ban.not_allowed")
+		const target = await interaction.options.getMentionable("member")
+		const username = target?.user?.username ?? target.username
+		if (!target.bannable && !(target instanceof User))
+			return await reply(interaction, "ban.not_allowed")
 		const unparsedDuration = interaction.options.getString("duration")
 		if (unparsedDuration) {
 			let unbanTime = await parseTime(unparsedDuration)
@@ -42,16 +44,16 @@ module.exports = {
 				type: "ban",
 			})
 		}
-		target.ban({ reason: interaction.options.getString("reason") })
+		await interaction.guild.bans.create(target, {
+			reason: interaction.options.getString("reason"),
+		})
 		if (unparsedDuration) {
 			await reply(interaction, "ban_duration.success", {
-				username: target.user.username,
+				username: username,
 				duration: unparsedDuration,
 			})
 		} else {
-			await reply(interaction, "ban.success", {
-				username: target.user.username,
-			})
+			await reply(interaction, "ban.success", { username: username })
 		}
 	},
 	async finishedTimer(timer: Timer) {
