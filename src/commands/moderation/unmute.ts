@@ -6,7 +6,7 @@ import { hasPermissions } from "../../lib/checkPermissions"
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("unmute")
-		.setDescription("Mute a member")
+		.setDescription("Unmute a member")
 		.addMentionableOption((option) =>
 			option
 				.setName("member")
