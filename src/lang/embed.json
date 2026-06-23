@@ -2,42 +2,50 @@
 	"mute.success": {
 		"title": "$mute.success.title",
 		"color": "$color.green",
-		"description": "$mute.success.description"
+		"description": "$mute.success.description",
+		"thumbnail": { "url": "https://i.ibb.co/39Gg8RMG/block-message.png" }
 	},
 	"unmute.success": {
 		"title": "$unmute.success.title",
 		"color": "$color.green",
-		"description": "$unmute.success.description"
+		"description": "$unmute.success.description",
+		"thumbnail": { "url": "https://i.ibb.co/605Xh7tT/message.png" }
 	},
 	"unlock.success": {
 		"title": "$unlock.success.title",
 		"color": "$color.green",
-		"description": "$unlock.success.description"
+		"description": "$unlock.success.description",
+		"thumbnail": { "url": "https://i.ibb.co/Z1zDtgHW/unlock.png" }
 	},
 	"lock.success": {
 		"title": "$lock.success.title",
 		"color": "$color.green",
-		"description": "$lock.success.description"
+		"description": "$lock.success.description",
+		"thumbnail": { "url": "https://i.ibb.co/pjMXPxVf/lock.png" }
 	},
 	"unban.success": {
 		"title": "$unban.success.title",
 		"color": "$color.green",
-		"description": "$unban.success.description"
+		"description": "$unban.success.description",
+		"thumbnail": { "url": "https://i.ibb.co/Q3pL3tyW/person.png" }
 	},
 	"kick.success": {
 		"title": "$kick.success.title",
 		"color": "$color.green",
-		"description": "$kick.success.description"
+		"description": "$kick.success.description",
+		"thumbnail": { "url": "https://i.ibb.co/LhXmDyyj/person-block.png" }
 	},
 	"ban.success": {
 		"title": "$ban.success.title",
 		"color": "$color.green",
-		"description": "$ban.success.untimed.description"
+		"description": "$ban.success.untimed.description",
+		"thumbnail": { "url": "https://i.ibb.co/BKdS5cjn/person-minus.png" }
 	},
 	"untimeout.success": {
 		"title": "$untimeout.success.title",
 		"color": "$color.green",
-		"description": "$unmute.success.description"
+		"description": "$unmute.success.description",
+		"thumbnail": { "url": "https://i.ibb.co/605Xh7tT/message.png" }
 	},
 	"slowmode.success": {
 		"title": "$slowmode.success.title",
