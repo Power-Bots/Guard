@@ -1,7 +1,7 @@
-import { SlashCommandBuilder } from "discord.js"
 import { Config, ConfigTypes, reply } from "@power-bots/powerbotlibrary"
-import { refreshMuteRole } from "../../lib/refreshMuteRole"
+import { SlashCommandBuilder } from "discord.js"
 import { hasPermissions } from "../../lib/checkPermissions"
+import { refreshMuteRole } from "../../lib/refreshMuteRole"
 
 module.exports = {
 	data: new SlashCommandBuilder()

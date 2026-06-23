@@ -1,5 +1,5 @@
 import { Lang, reply } from "@power-bots/powerbotlibrary"
-import { PermissionFlagsBits, CommandInteraction } from "discord.js"
+import { CommandInteraction, PermissionFlagsBits } from "discord.js"
 
 interface CheckPermissionsOptions {
 	checkMember?: boolean

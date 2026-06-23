@@ -1,7 +1,7 @@
-import { SlashCommandBuilder, Guild, Role } from "discord.js"
-import { bot } from "../../main"
 import { Config, ConfigTypes, reply } from "@power-bots/powerbotlibrary"
+import { Guild, Role, SlashCommandBuilder } from "discord.js"
 import { hasPermissions } from "../../lib/checkPermissions"
+import { bot } from "../../main"
 
 module.exports = {
 	data: new SlashCommandBuilder()

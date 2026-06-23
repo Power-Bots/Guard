@@ -1,6 +1,6 @@
-import { bot, Config, ConfigTypes } from "@power-bots/powerbotlibrary"
-import { Timer } from "./lib/timers"
+import { bot, Config } from "@power-bots/powerbotlibrary"
 import { refreshMuteRole } from "./lib/refreshMuteRole"
+import { Timer } from "./lib/timers"
 
 export { bot, knex } from "@power-bots/powerbotlibrary"
 

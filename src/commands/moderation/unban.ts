@@ -1,7 +1,7 @@
-import { SlashCommandBuilder, MessageFlags, GuildBan } from "discord.js"
-import { Timer } from "../../lib/timers"
-import { hasPermissions } from "../../lib/checkPermissions"
 import { reply } from "@power-bots/powerbotlibrary"
+import { GuildBan, SlashCommandBuilder } from "discord.js"
+import { hasPermissions } from "../../lib/checkPermissions"
+import { Timer } from "../../lib/timers"
 
 module.exports = {
 	data: new SlashCommandBuilder()

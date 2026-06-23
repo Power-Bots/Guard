@@ -1,9 +1,9 @@
-import { SlashCommandBuilder, MessageFlags, User } from "discord.js"
+import { reply } from "@power-bots/powerbotlibrary"
+import { SlashCommandBuilder, User } from "discord.js"
+import { hasPermissions } from "../../lib/checkPermissions"
 import { parseTime } from "../../lib/parseTime"
 import { Timer } from "../../lib/timers"
 import { bot } from "../../main"
-import { hasPermissions } from "../../lib/checkPermissions"
-import { reply } from "@power-bots/powerbotlibrary"
 
 module.exports = {
 	data: new SlashCommandBuilder()
