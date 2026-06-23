@@ -36,7 +36,8 @@
 	},
 	"untimeout.success": {
 		"title": "$untimeout.success.title",
-		"color": "$color.green"
+		"color": "$color.green",
+		"description": "$unmute.success.description"
 	},
 	"slowmode.success": {
 		"title": "$slowmode.success.title",
@@ -46,6 +47,7 @@
 	"lock_duration.success": {
 		"title": "$lock.success.title",
 		"color": "$color.green",
+		"description": "$lock_duration.success.description",
 		"fields": [{ "name": "Duration", "value": "$duration" }]
 	},
 	"ban_duration.success": {
@@ -57,6 +59,7 @@
 	"timeout.success": {
 		"title": "$timeout.success.title",
 		"color": "$color.green",
+		"description": "$mute.success.description",
 		"fields": [{ "name": "Duration", "value": "$duration" }]
 	},
 	"muterole.refresh.results": {
@@ -78,16 +81,19 @@
 	"error.invalid_duration": {
 		"title": "$error.invalid_duration.title",
 		"color": "$color.red",
+		"description": "$error.invalid_duration.description",
 		"options": { "ephemeral": true }
 	},
 	"error.invalid_channel": {
 		"title": "$error.invalid_channel.title",
 		"color": "$color.red",
+		"description": "$error.invalid_channel.description",
 		"options": { "ephemeral": true }
 	},
 	"error.invalid_delay": {
 		"title": "$error.invalid_delay.title",
 		"color": "$color.red",
+		"description": "$error.invalid_delay.description",
 		"options": { "ephemeral": true }
 	},
 	"mute.role_invalid": {
@@ -98,42 +104,50 @@
 	},
 	"kick.not_allowed": {
 		"title": "$kick.not_allowed.title",
+		"description": "$kick.not_allowed.description",
 		"color": "$color.red",
 		"options": { "ephemeral": true }
 	},
 	"ban.not_allowed": {
 		"title": "$ban.not_allowed.title",
 		"color": "$color.red",
+		"description": "$ban.not_allowed.description",
 		"options": { "ephemeral": true }
 	},
 	"unban.not_allowed": {
 		"title": "$unban.not_allowed.title",
 		"color": "$color.red",
+		"description": "$unban.not_allowed.description",
 		"options": { "ephemeral": true }
 	},
 	"timeout.not_allowed": {
 		"title": "$timeout.not_allowed.title",
 		"color": "$color.red",
+		"description": "$ban.not_allowed.description",
 		"options": { "ephemeral": true }
 	},
 	"untimeout.not_allowed": {
 		"title": "$untimeout.not_allowed.title",
 		"color": "$color.red",
+		"description": "$untimeout.not_allowed.description",
 		"options": { "ephemeral": true }
 	},
 	"timeout.invalid_duration": {
 		"title": "$timeout.invalid_duration.title",
 		"color": "$color.red",
+		"description": "$error.invalid_duration.description",
 		"options": { "ephemeral": true }
 	},
 	"error.bot_missing_permission": {
 		"title": "$error.bot_missing_permission.title",
 		"color": "$color.red",
+		"description": "$error.bot_missing_permission.description",
 		"options": { "ephemeral": true }
 	},
 	"error.user_missing_permission": {
 		"title": "$error.user_missing_permission.title",
 		"color": "$color.red",
+		"description": "$error.user_missing_permission.description",
 		"options": { "ephemeral": true }
 	}
 }
