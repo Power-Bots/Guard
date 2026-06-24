@@ -21,9 +21,9 @@ module.exports = {
 	async execute(interaction: any) {
 		if (!(await hasPermissions(interaction, "DeafenMembers"))) return
 		const target: GuildMember = interaction.options.getMentionable("member")
-		if (!target.moderatable || !target.voice.channel)
+		if (!target.moderatable || !target.voice.channel === null)
 			return await reply(interaction, "generic.error")
-		await target.voice.setDeaf(true)
+		await target.voice.setDeaf(true, interaction.options.getString("reason"))
 		await reply(interaction, "generic.success", {
 			username: target.user.username,
 		})
