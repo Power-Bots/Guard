@@ -157,5 +157,15 @@
 		"color": "$color.red",
 		"description": "$error.user_missing_permission.description",
 		"options": { "ephemeral": true }
+	},
+	"generic.success": {
+		"title": "$generic.success.title",
+		"color": "$color.green",
+		"description": "$generic.success.description"
+	},
+	"generic.error": {
+		"title": "$generic.error.title",
+		"color": "$color.green",
+		"description": "$generic.error.description"
 	}
 }
